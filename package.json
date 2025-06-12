@@ -1,0 +1,47 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --turbo",
+    "dev:clean-cache": "rm -rf .next && pnpm dev",
+    "build": "next build",
+    "start": "next start -p 3003",
+    "preview": "pnpm build && pnpm start",
+    "lint": "next lint",
+    "lint:fix": "pnpm lint --fix",
+    "typecheck": "tsc --noEmit",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
+    "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
+    "check": "pnpm lint && pnpm typecheck && pnpm format:check"
+  },
+  "dependencies": {
+    "@t3-oss/env-nextjs": "^0.13.8",
+    "@total-typescript/ts-reset": "^0.6.1",
+    "mapbox-gl": "^3.12.0",
+    "next": "^15.3.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-map-gl": "^8.0.4",
+    "zod": "^3.25.63"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@ianvs/prettier-plugin-sort-imports": "^4.4.2",
+    "@tailwindcss/postcss": "^4.1.10",
+    "@types/mapbox-gl": "^3.4.1",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "babel-plugin-react-compiler": "19.1.0-rc.2",
+    "eslint": "^9",
+    "eslint-config-next": "^15.3.3",
+    "eslint-plugin-react-compiler": "19.1.0-rc.2",
+    "postcss": "^8",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.12",
+    "tailwindcss": "^4.1.10",
+    "typescript": "^5",
+    "typescript-eslint": "^8.34.0"
+  },
+  "packageManager": "pnpm@10.12.1"
+}

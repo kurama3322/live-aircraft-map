@@ -1,0 +1,29 @@
+import type React from 'react'
+import '@total-typescript/ts-reset'
+import type { Metadata } from 'next'
+import { Reddit_Mono } from 'next/font/google'
+import Script from 'next/script'
+import '~/app/globals.css'
+
+const redditMono = Reddit_Mono({
+  variable: '--font-reddit-mono',
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+})
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      {/*https://www.npmjs.com/package/react-scan*/}
+      <Script src="https://cdn.jsdelivr.net/npm/react-scan/dist/auto.global.js" />
+      <body className={`${redditMono.variable} antialiased`}>{children}</body>
+    </html>
+  )
+}
+
+export const metadata: Metadata = {
+  title: 'planes',
+  description: 'live aircraft map',
+  icons: [{ rel: 'icon', url: '/favicon.ico' }],
+}

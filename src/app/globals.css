@@ -1,0 +1,6 @@
+@import 'tailwindcss';
+
+body {
+  /* noinspection CssUnresolvedCustomProperty */
+  font-family: var(--font-reddit-mono), ui-monospace, monospace;
+}
