@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start -p 3003",
     "preview": "pnpm build && pnpm start",
+    "test": "vitest",
     "lint": "next lint",
     "lint:fix": "pnpm lint --fix",
     "typecheck": "tsc --noEmit",
@@ -16,7 +17,12 @@
   },
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.13.8",
+    "@tanstack/query-sync-storage-persister": "^5.80.7",
+    "@tanstack/react-query": "^5.80.7",
+    "@tanstack/react-query-devtools": "^5.80.7",
+    "@tanstack/react-query-persist-client": "^5.80.7",
     "@total-typescript/ts-reset": "^0.6.1",
+    "es-toolkit": "^1.39.3",
     "mapbox-gl": "^3.12.0",
     "next": "^15.3.3",
     "react": "^19.1.0",
@@ -28,6 +34,7 @@
     "@eslint/eslintrc": "^3",
     "@ianvs/prettier-plugin-sort-imports": "^4.4.2",
     "@tailwindcss/postcss": "^4.1.10",
+    "@types/geojson": "^7946.0.16",
     "@types/mapbox-gl": "^3.4.1",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -41,7 +48,8 @@
     "prettier-plugin-tailwindcss": "^0.6.12",
     "tailwindcss": "^4.1.10",
     "typescript": "^5",
-    "typescript-eslint": "^8.34.0"
+    "typescript-eslint": "^8.34.0",
+    "vitest": "^3.2.3"
   },
   "packageManager": "pnpm@10.12.1"
 }

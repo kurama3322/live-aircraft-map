@@ -3,6 +3,7 @@ import '@total-typescript/ts-reset'
 import type { Metadata } from 'next'
 import { Reddit_Mono } from 'next/font/google'
 import Script from 'next/script'
+import { Providers } from '~/components/providers'
 import '~/app/globals.css'
 
 const redditMono = Reddit_Mono({
@@ -17,7 +18,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       {/*https://www.npmjs.com/package/react-scan*/}
       <Script src="https://cdn.jsdelivr.net/npm/react-scan/dist/auto.global.js" />
-      <body className={`${redditMono.variable} antialiased`}>{children}</body>
+      <body className={`${redditMono.variable} antialiased`}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   )
 }
