@@ -1,0 +1,13 @@
+{
+  "crons": [
+    {
+      "path": "/api/airports",
+      "schedule": "0 3 * * 1"
+    }
+  ],
+  "functions": {
+    "app/api/**/*": {
+      "maxDuration": 60
+    }
+  }
+}

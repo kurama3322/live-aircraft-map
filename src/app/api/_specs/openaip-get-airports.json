@@ -1,0 +1,368 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "OpenAIP - Core API (Airports Only)",
+    "description": "Minimal spec for GET /airports endpoint.",
+    "version": "1.1",
+    "contact": { "email": "webmaster@openaip.net" },
+    "license": {
+      "name": "Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)",
+      "url": "https://creativecommons.org/licenses/by-nc/4.0/"
+    }
+  },
+  "tags": [
+    { "name": "Airports", "description": "CRUD endpoints for airport." }
+  ],
+  "servers": [
+    {
+      "url": "https://api.core.openaip.net/api",
+      "description": "Main production API server."
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Send a valid base64 encoded OIDC access token (JWT) in the 'Authorization' header. The token must be prefixed with 'Bearer'."
+      },
+      "apiKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-openaip-api-key",
+        "description": "A valid third party application's ID token sent with the 'x-openaip-api-key' header. Tokens are granted to trusted third party applications and can be created in the user's profile page in the web application."
+      },
+      "apiKey": {
+        "type": "apiKey",
+        "in": "query",
+        "name": "apiKey",
+        "description": "A valid third party application's API key sent with the query parameter 'apiKey'. This can be used instead of sending it within the header 'x-openaip-api-key'. Tokens are granted to trusted third party applications and can be created in the user's profile page in the web application."
+      }
+    },
+    "parameters": {
+      "bbox": {
+        "in": "query",
+        "name": "bbox",
+        "schema": { "type": "string" },
+        "description": "A comma separated list of lat/lon values that define a bound box of an area of interest (AOI). The bbox must be defined as 'minx,miny,maxx,maxy'. ",
+        "example": "9.0,45.0,10.0,46.0"
+      }
+    }
+  },
+  "paths": {
+    "/airports": {
+      "get": {
+        "tags": ["Airports"],
+        "summary": "Returns a list of airports.",
+        "description": "Endpoint to retrieve a list of airports.",
+        "security": [{ "bearerAuth": [], "apiKey": [], "apiKeyHeader": [] }],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": { "type": "integer" },
+            "required": false,
+            "description": "Defines which page to return. Used with query parameter 'limit' to paginate through large result lists. Page numbers start at 1. Defaults to 1.",
+            "example": 1
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": { "type": "integer" },
+            "required": false,
+            "description": "Defines maximum item count retrieved per page. Default value depends on the called API service, usually defaults to 1000.",
+            "example": 100
+          },
+          {
+            "in": "query",
+            "name": "fields",
+            "schema": { "type": "string" },
+            "required": false,
+            "description": "A comma separated list of field names that should be available on returned objects in the list. If not specified, all available object fields will be returned.",
+            "example": "_id,propertyName1,propertyName2"
+          },
+          {
+            "in": "query",
+            "name": "pos",
+            "schema": { "type": "string" },
+            "description": "A position defined by decimal coordinates. If set, endpoint will only return documents that are within a specific radius around the requested coordinates. Radius can be defined by using the query parameter 'dist'. If not set, endpoints will usually set a default value for the radius.",
+            "required": false,
+            "example": "45.243432,9.23423"
+          },
+          {
+            "in": "query",
+            "name": "dist",
+            "schema": { "type": "integer" },
+            "description": "Distance in meters around specified position if defined. If not set, endpoints will usually set a default value.",
+            "required": false,
+            "example": "15000"
+          },
+          { "$ref": "#/components/parameters/bbox" },
+          {
+            "in": "query",
+            "name": "sortBy",
+            "schema": { "type": "string" },
+            "description": "Sort query results by specified field. If set, the query parameter 'sortDesc' can be used to change sort direction. If 'sortDesc' is not set, default sort is ascending order.",
+            "required": false,
+            "example": "name"
+          },
+          {
+            "in": "query",
+            "name": "sortDesc",
+            "schema": { "type": "boolean" },
+            "description": "Sort query results in ascending order. Only applies if 'sortBy' is set. Defaults to false.",
+            "required": false,
+            "example": true
+          },
+          {
+            "in": "query",
+            "name": "country",
+            "schema": { "type": "string" },
+            "required": false,
+            "description": "Search by ISO alpha-2 country code.",
+            "example": "DE"
+          },
+          {
+            "in": "query",
+            "name": "searchOptLwc",
+            "schema": { "type": "boolean" },
+            "description": "If true, uses leading wildcard regex to search results. This can be used to find something that 'contains' the input string. Defaults to false and uses leading wildcard search.",
+            "required": false,
+            "example": true
+          },
+          {
+            "in": "query",
+            "name": "id",
+            "schema": { "type": "string" },
+            "required": false,
+            "description": "A document reference ID.",
+            "example": "5ffdc9dbf8c23aae8e0515b7"
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "schema": { "type": "string" },
+            "required": false,
+            "description": "Searches and returns airports where searchable fields match the input string.Search is case-insensitive. Searchable fields are:</br><ul><li>name</li><li>icaoCode</li><li>iataCode</li><li>altIdentifier</li></ul>",
+            "example": "Whiskey"
+          },
+          {
+            "in": "query",
+            "name": "type",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+              }
+            },
+            "required": false,
+            "description": "Show only airports of the provided types."
+          },
+          {
+            "in": "query",
+            "name": "trafficType",
+            "schema": {
+              "type": "array",
+              "items": { "type": "integer", "enum": [0, 1] }
+            },
+            "required": false,
+            "description": "Show only airports that allow the provided traffic types."
+          },
+          {
+            "in": "query",
+            "name": "ppr",
+            "schema": { "type": "boolean" },
+            "required": false,
+            "description": "If true shows only airfields that are PPR."
+          },
+          {
+            "in": "query",
+            "name": "private",
+            "schema": { "type": "boolean" },
+            "required": false,
+            "description": "If true shows only airfields that are private."
+          },
+          {
+            "in": "query",
+            "name": "skydiveActivity",
+            "schema": { "type": "boolean" },
+            "required": false,
+            "description": "If true shows only airfields that are have skydive activity."
+          },
+          {
+            "in": "query",
+            "name": "winchOnly",
+            "schema": { "type": "boolean" },
+            "required": false,
+            "description": "If true shows only airfields that allow winch launch only."
+          },
+          {
+            "in": "query",
+            "name": "servicesFuelType",
+            "schema": {
+              "type": "array",
+              "items": { "type": "integer", "enum": [0, 1, 2, 3, 4, 5, 6] }
+            },
+            "required": false,
+            "description": "Only show airports that provide at least one of the provided fuel types"
+          },
+          {
+            "in": "query",
+            "name": "servicesGliderTowing",
+            "schema": {
+              "type": "array",
+              "items": { "type": "integer", "enum": [0, 1, 2, 3, 4, 5] }
+            },
+            "required": false,
+            "description": "Only show airports that provide at least one of the provided glider towing types"
+          },
+          {
+            "in": "query",
+            "name": "servicesHandlingFacility",
+            "schema": {
+              "type": "array",
+              "items": { "type": "integer", "enum": [0, 1, 2, 3, 4] }
+            },
+            "required": false,
+            "description": "Only show airports that provide at least one of the provided handling facilities"
+          },
+          {
+            "in": "query",
+            "name": "servicesPassengerFacility",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+              }
+            },
+            "required": false,
+            "description": "Only show airports that provide at least one of the provided passenger facilities"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of airports is returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://api.core.openaip.net/api/schemas/response/airport/list-schema.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" },
+                    "code": { "type": "string" },
+                    "status": { "type": "integer" }
+                  },
+                  "required": ["message", "code", "status"],
+                  "additionalProperties": false
+                },
+                "example": { "message": "Bad Request" }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization information is missing or invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" },
+                    "code": { "type": "string" },
+                    "status": { "type": "integer" }
+                  },
+                  "required": ["message", "code", "status"],
+                  "additionalProperties": false
+                },
+                "example": { "message": "Authentication required" }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication was successful but client has insufficient permissions to access the resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" },
+                    "code": { "type": "string" },
+                    "status": { "type": "integer" }
+                  },
+                  "required": ["message", "code", "status"],
+                  "additionalProperties": false
+                },
+                "example": { "message": "Permission denied" }
+              }
+            }
+          },
+          "404": {
+            "description": "Requested resource was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" },
+                    "code": { "type": "string" },
+                    "status": { "type": "integer" }
+                  },
+                  "required": ["message", "code", "status"],
+                  "additionalProperties": false
+                },
+                "example": { "message": "Not found" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" },
+                    "code": { "type": "string" },
+                    "status": { "type": "integer" }
+                  },
+                  "required": ["message", "code", "status"],
+                  "additionalProperties": false
+                },
+                "example": { "message": "Server error occurred" }
+              }
+            }
+          },
+          "504": {
+            "description": "Bad gateway or request timed out. Usually this indicates that the service is temporarily not available.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" },
+                    "code": { "type": "string" },
+                    "status": { "type": "integer" }
+                  },
+                  "required": ["message", "code", "status"],
+                  "additionalProperties": false
+                },
+                "example": { "message": "Request timeout" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
