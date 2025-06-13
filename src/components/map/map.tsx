@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { debounce } from 'es-toolkit'
 import { Map as MapboxMap, type ViewStateChangeEvent } from 'react-map-gl/mapbox'
+import AirportsLayer from '~/components/map/components/airports-layer'
 import { PlanesLayer } from '~/components/map/components/planes-layer'
 import { getFetchBounds, getPlanesGeoJSON } from '~/components/map/helpers'
 import { useMapIcons } from '~/components/map/hooks/useMapIcons'
@@ -38,7 +39,12 @@ export function Map() {
       mapStyle="mapbox://styles/mapbox/dark-v11"
       mapboxAccessToken={env.NEXT_PUBLIC_MAPBOX_TOKEN}
     >
-      {areIconsLoaded && <PlanesLayer planesGeoJSON={planesGeoJSON} />}
+      {areIconsLoaded && (
+        <>
+          <PlanesLayer planesGeoJSON={planesGeoJSON} />
+          <AirportsLayer />
+        </>
+      )}
     </MapboxMap>
   )
 }

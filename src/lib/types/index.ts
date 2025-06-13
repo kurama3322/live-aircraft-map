@@ -1,5 +1,7 @@
 import type { FeatureCollection, Geometry } from 'geojson'
 
+export * from '~/app/api/airports/_lib/types'
+
 // OSN API docs: https://openskynetwork.github.io/opensky-api/rest.html
 export type PlaneApiState = [
   string, // 0: icao24 - Unique ICAO24 24-bit address of the transponder in hex string representation
