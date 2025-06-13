@@ -5,6 +5,7 @@ import { debounce } from 'es-toolkit'
 import { Map as MapboxMap, type ViewStateChangeEvent } from 'react-map-gl/mapbox'
 import AirportsLayer from '~/components/map/components/airports-layer'
 import { PlanesLayer } from '~/components/map/components/planes-layer'
+import Status from '~/components/map/components/status'
 import { getFetchBounds, getPlanesGeoJSON } from '~/components/map/helpers'
 import { useMapIcons } from '~/components/map/hooks/useMapIcons'
 import { usePlanesData } from '~/data/planes'
@@ -27,24 +28,27 @@ export function Map() {
   }, 1000 * 0.1)
 
   return (
-    <MapboxMap
-      onLoad={loadIcons}
-      onMoveEnd={handleMoveEnd}
-      initialViewState={INITIAL_VIEW_STATE}
-      minZoom={1.8}
-      maxZoom={17}
-      maxPitch={0}
-      attributionControl={false}
-      performanceMetricsCollection={false}
-      mapStyle="mapbox://styles/mapbox/dark-v11"
-      mapboxAccessToken={env.NEXT_PUBLIC_MAPBOX_TOKEN}
-    >
-      {areIconsLoaded && (
-        <>
-          <PlanesLayer planesGeoJSON={planesGeoJSON} />
-          <AirportsLayer />
-        </>
-      )}
-    </MapboxMap>
+    <>
+      <MapboxMap
+        onLoad={loadIcons}
+        onMoveEnd={handleMoveEnd}
+        initialViewState={INITIAL_VIEW_STATE}
+        minZoom={1.8}
+        maxZoom={17}
+        maxPitch={0}
+        attributionControl={false}
+        performanceMetricsCollection={false}
+        mapStyle="mapbox://styles/mapbox/dark-v11"
+        mapboxAccessToken={env.NEXT_PUBLIC_MAPBOX_TOKEN}
+      >
+        {areIconsLoaded && (
+          <>
+            <PlanesLayer planesGeoJSON={planesGeoJSON} />
+            <AirportsLayer />
+          </>
+        )}
+      </MapboxMap>
+      <Status fetchBounds={fetchBounds} />
+    </>
   )
 }

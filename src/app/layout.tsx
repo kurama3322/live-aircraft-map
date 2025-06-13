@@ -15,7 +15,9 @@ const redditMono = Reddit_Mono({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    // suppressHydrationWarning is needed for next-themes https://www.npmjs.com/package/next-themes
+    // this property only applies 1 level deep https://nextjs.org/docs/messages/react-hydration-error
+    <html lang="en" suppressHydrationWarning>
       {/*https://www.npmjs.com/package/react-scan*/}
       <Script src="https://cdn.jsdelivr.net/npm/react-scan/dist/auto.global.js" />
       <body className={`${redditMono.variable} antialiased`}>
