@@ -11,23 +11,35 @@ const positionToCN = {
 
 interface MapCardProps extends React.ComponentPropsWithoutRef<'div'> {
   position?: keyof typeof positionToCN
+  responsiveWidth?: boolean
+  responsiveHeight?: boolean
   variant?: 'default' | 'error'
 }
 
 export function MapCard({
   position,
+  responsiveWidth = false,
+  responsiveHeight = false,
   variant = 'default',
   className,
   ...props
 }: MapCardProps) {
   const positionCN = position ? positionToCN[position] : null
-  const variantCN = variant === 'error' ? 'bg-red-800/90' : 'bg-black/70'
+  const responsiveWidthCN = responsiveWidth
+    ? 'xs:m-3 xs:w-94 m-0 w-full max-w-none'
+    : null
+  const responsiveHeightCN = responsiveHeight
+    ? 'bottom-auto right-0 left-auto top-0 h-sm:bottom-0 h-sm:right-0 h-sm:left-0 h-sm:top-auto'
+    : null
+  const variantCN = variant === 'error' ? 'bg-red-800/90' : 'bg-[var(--transparent-bg)]'
 
   return (
     <Card
       className={cn(
-        'absolute block max-w-sm rounded border-none px-5 py-3 wrap-break-word',
+        'h-md:max-h-150 absolute block max-h-75 max-w-sm overflow-y-auto rounded border-none px-5 py-3 wrap-break-word',
         positionCN,
+        responsiveWidthCN,
+        responsiveHeightCN,
         variantCN,
         className,
       )}

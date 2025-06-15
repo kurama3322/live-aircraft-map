@@ -53,11 +53,21 @@ export type Plane = {
   squawk: string | null
 }
 
+export type TablePlane = Pick<
+  Plane,
+  'originCountry' | 'velocity' | 'verticalRate' | 'geoAltitude' | 'icao24' | 'onGround'
+>
+
 export type PlanesGeoJSON = FeatureCollection<Geometry, Plane>
 
 export type FetchBounds = {
-  latMin: number
-  latMax: number
   lngMin: number
   lngMax: number
+  latMin: number
+  latMax: number
+}
+
+export type CursorLocation = {
+  lng: number
+  lat: number
 }

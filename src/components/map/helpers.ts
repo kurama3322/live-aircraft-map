@@ -19,18 +19,18 @@ export function getPlanesGeoJSON(planesData: PlanesData): PlanesGeoJSON {
 export function getFetchBounds(mapBounds: LngLatBounds): FetchBounds {
   const boundsBuffer = 0.1
 
-  const laMin = mapBounds.getSouth()
-  const laMax = mapBounds.getNorth()
   const loMin = mapBounds.getWest()
   const loMax = mapBounds.getEast()
+  const laMin = mapBounds.getSouth()
+  const laMax = mapBounds.getNorth()
 
-  const laDiff = laMax - laMin
   const loDiff = loMax - loMin
+  const laDiff = laMax - laMin
 
   return {
-    latMin: laMin - laDiff * boundsBuffer,
-    latMax: laMax + laDiff * boundsBuffer,
     lngMin: loMin - loDiff * boundsBuffer,
     lngMax: loMax + loDiff * boundsBuffer,
+    latMin: laMin - laDiff * boundsBuffer,
+    latMax: laMax + laDiff * boundsBuffer,
   }
 }

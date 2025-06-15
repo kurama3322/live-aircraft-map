@@ -3,7 +3,7 @@ import '@total-typescript/ts-reset'
 import type { Metadata } from 'next'
 import { Reddit_Mono } from 'next/font/google'
 import Script from 'next/script'
-import { Providers } from '~/components/providers'
+import { Providers } from '~/components/providers/providers'
 import '~/app/globals.css'
 
 const redditMono = Reddit_Mono({

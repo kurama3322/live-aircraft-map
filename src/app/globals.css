@@ -8,6 +8,15 @@ body {
 
 @custom-variant dark (&:is(.dark *));
 
+@custom-variant h-md (@media (height >= 54rem));
+@custom-variant h-sm (@media (height >= 36rem));
+@custom-variant table (@media (height >= 36rem) and (width >= 71rem));
+
+@theme {
+  --breakpoint-xs: 26rem;
+  --transparent-bg: rgba(0, 0, 0, 0.7);
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

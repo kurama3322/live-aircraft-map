@@ -1,4 +1,5 @@
 import { FlatCompat } from '@eslint/eslintrc'
+import pluginQuery from '@tanstack/eslint-plugin-query'
 import reactCompiler from 'eslint-plugin-react-compiler'
 import tseslint from 'typescript-eslint'
 
@@ -11,6 +12,7 @@ export default tseslint.config(
     ignores: ['.next', '**/*.d.ts'],
   },
   ...compat.extends('next/core-web-vitals'),
+  pluginQuery.configs['flat/recommended'],
   reactCompiler.configs.recommended,
   {
     files: ['**/*.ts', '**/*.tsx'],

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 type DotCount = 0 | 1 | 2 | 3
 
 export function Loading() {
-  const [dotCount, setDotCount] = useState<DotCount>(0)
+  const [dotCount, setDotCount] = useState<DotCount>(3)
   const dots = '.'.repeat(dotCount)
 
   useEffect(() => {
